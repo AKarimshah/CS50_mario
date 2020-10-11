@@ -1,0 +1,217 @@
+#Creating Database
+DROP DATABASE IF EXISTS assignment2;
+CREATE DATABASE IF NOT EXISTS assignment2;
+USE assignment2;
+
+
+#Table names
+drop table if exists student;
+drop table if exists academic;
+drop table if exists admin;
+drop table if exists course;
+drop table if exists enrolment;
+drop table if exists grade;
+drop table if exists user;
+
+
+#creating student table
+create table student (
+student_id char(10),
+first_name varchar(20),
+last_name varchar(20),
+DOB date,
+sex char(6),
+phone int(10),
+constraint student_pk Primary key(student_id),
+UNIQUE(student_id, first_name, last_name, phone));
+
+#inserting values to student table
+Insert into student value ('s01', 'Donaldo', 'True', '1992-02-02', 'M', '123456');
+Insert into student value ('s02', 'Tarra', 'Obana', '1994-04-04', 'M', '221134');
+Insert into student value ('s03', 'Angela', 'Merkal', '1991-01-01', 'F', '543210');
+Insert into student value ('s04', 'Hillarious', 'Blinton', '1993-03-03', 'F', '112233');
+
+
+#creating academicstaff table
+create table academicstaff (
+acad_id char(10),
+first_name varchar(20),
+last_name varchar(20),
+position varchar(20),
+constraint academicstaff_pk Primary key(acad_id),
+UNIQUE(acad_id, first_name, last_name));
+
+Insert into academicstaff value ('a01', 'Seb', 'Binary', 'Professor');
+Insert into academicstaff value ('a02', 'Jazz', 'Wood', 'Assoc Professor');
+Insert into academicstaff value ('a03', 'Miguel', 'Franco', 'Lecturer');
+
+
+#creating adminstaff table
+create table adminstaff (
+admin_id char(10),
+first_name varchar(20),
+last_name varchar(20),
+duty varchar(20),
+constraint adminstaff_pk Primary key(admin_id),
+UNIQUE(admin_id, first_name, last_name));
+
+#inserting values to admin_staff
+Insert into adminstaff value ('f01', 'Cristinao', 'Penaldo', 'Enrolment');
+Insert into adminstaff value ('f02', 'Lionel', 'Missy', 'Courses');
+
+
+#creating course table
+create table course (
+course_id char(10),
+course_name varchar(20),
+convener varchar(20),
+trimester varchar(3),
+campus varchar(20),
+constraint course_pk Primary key(course_id),
+UNIQUE(course_id, course_name));
+
+#inserting values to course
+Insert into course value ('101ICT', 'Information Management', 'Seb Binary', '1&2', 'GC');
+Insert into course value ('102ICT', 'Object Oriented Programming', 'Jazz Wood', '2', 'NA');
+Insert into course value ('101STA', 'Statistics', 'Jazz Wood', '1', 'GC, NA');
+Insert into course value ('101CS', 'Data Analytics', 'Seb Binary', '1', 'GC');
+Insert into course value ('102CS', 'Information Retrieval', 'Miguel Franco', '1&3', 'GC');
+
+
+#creating classroom table
+create table classroom (
+classroom_id char(10),
+course_id char(10),
+acad_id char(10),
+trimester char(4),
+campus varchar(10),
+constraint classroom_pk Primary key(classroom_id),
+UNIQUE(course_id));
+
+#inserting values to classroom
+Insert into classroom value ('101A', '101ICT' , 'a01', '1&2', 'GC');
+Insert into classroom value ('102B', '102ICT' , 'a02', '2', 'NA');
+Insert into classroom value ('101C', '101STA' , 'a02', '1', 'GC,NA');
+Insert into classroom value ('101D', '101CS' , 'a01', '1', 'GC');
+Insert into classroom value ('102E', '102CS' , 'ao3', '1&3', 'GC');
+
+
+#creating enrolment table
+create table enrolment (
+enrolment_id char(10),
+manageenrol_id char(10),
+managegrade_id char(10),
+grade_id char(10),
+course_id char(10),
+classroom_id char(20),
+student_id char(20),
+student_name varchar(20),
+year int(1),
+trimester int(3),
+campus varchar(20),
+constraint enrolment_pk Primary key(enrolment_id),
+UNIQUE(enrolment_id));
+
+#inserting values to enrolment
+Insert into enrolment value ('e01', 'me01', 'mg01', 'g01','101ICT', '101A', 's01', 'Angela Merkal', '2017', '1', 'GC');
+Insert into enrolment value ('e02', 'me02', 'mg02', 'g02','101STA', '101C', 's01', 'Angela Merkal', '2017', '1', 'GC');
+Insert into enrolment value ('e03', 'me03', 'mg03', 'g03','101CS', '101D', 's01', 'Angela Merkal', '2017', '1', 'GC');
+Insert into enrolment value ('e04', 'me04', 'mg04', 'g04','102ICT', '102B', 's01', 'Donaldo True', '2018', '2', 'NA');
+Insert into enrolment value ('e05', 'me05', 'mg05', 'g05','101CS', '101D', 's02', 'Donaldo True', '2017', '1', 'GC');
+Insert into enrolment value ('e06', 'me06', 'mg06', 'g06','102CS', '102E', 's03', 'Hillarious Blinton', '2018', '3', 'GC');
+Insert into enrolment value ('e07', 'me07', 'mg07', 'g07','102ICT', '102B', 's04', 'Tarra Obana', '2018', '2', 'NA');
+Insert into enrolment value ('e08', 'me08', 'mg08', 'g08','101STA', '101C', 's04', 'Tarra Obana', '2017', '1', 'NA');
+Insert into enrolment value ('e09', 'me09', 'mg09', 'g09','101CS', '101D', 's04', 'Tarra Obana', '2017', '1', 'GC');
+Insert into enrolment value ('e10', 'me10', 'mg10', 'g10','102CS', '102E', 's04', 'Tarra Obana', '2018', '1', 'GC');
+
+
+#creating managing enrolment table
+#creating managing enrolment table
+create table managingenrolment (
+managementenroll_id char(10),
+enrolment_id char(10),
+admin_id char(10),
+acad_id char(10),
+course_id char(10),
+student_id char(10),
+constraint managingenrolment_pk Primary key(managementenroll_id));
+
+#inserting values to managingenrolment table
+Insert into managingenrolment value ('me01', 'e01', 'f01', 'a01','101ICT', 's01');
+Insert into managingenrolment value ('me02', 'e02', 'f01', 'a02','101STA', 's01');
+Insert into managingenrolment value ('me03', 'e03', 'f01', 'a01','101CS', 's01');
+Insert into managingenrolment value ('me04', 'e04', 'f01', 'a02','102ICT', 's02');
+Insert into managingenrolment value ('me05', 'e05', 'f01', 'a01','101CS', 's02');
+Insert into managingenrolment value ('me06', 'e06', 'f01', 'a03','102CS', 's03');
+Insert into managingenrolment value ('me07', 'e07', 'f01', 'a02','102ICT', 's04');
+Insert into managingenrolment value ('me08', 'e08', 'f01', 'a02','101STA', 's04');
+Insert into managingenrolment value ('me09', 'e09', 'f01', 'a01','101CS', 's04');
+Insert into managingenrolment value ('me10', 'e10', 'f01', 'a03','102CS', 's04');
+
+
+#creating managing grade table
+create table managinggrade (
+managegrade_id char(10),
+enrolment_id char(10),
+user_id char(10),
+admin_id char(10),
+grade_id char(10),
+constraint managinggrade_pk Primary key(managegrade_id),
+UNIQUE(managegrade_id));
+
+Insert into managinggrade value ('mg01', 'e01', 'u04', 'f02', 'g01');
+Insert into managinggrade value ('mg02', 'e02', 'u05', 'f02', 'g02');
+Insert into managinggrade value ('mg03', 'e03', 'u04', 'f02', 'g03');
+Insert into managinggrade value ('mg04', 'e04', 'u05', 'f02', 'g04');
+Insert into managinggrade value ('mg05', 'e05', 'u04', 'f02', 'g05');
+Insert into managinggrade value ('mg06', 'e06', 'u06', 'f02', 'g06');
+Insert into managinggrade value ('mg07', 'e07', 'u05', 'f02', 'g07');
+Insert into managinggrade value ('mg08', 'e08', 'u05', 'f02', 'g08');
+Insert into managinggrade value ('mg09', 'e09', 'u04', 'f02', 'g09');
+Insert into managinggrade value ('mh10', 'e10', 'u06', 'f02', 'g10');
+
+
+#creating grade table
+create table grade (
+grade_id char(10),
+enrolment_id char(10),
+student_id char(10),
+score int(3),
+grade int(1),
+constraint grade_pk Primary key(grade_id),
+UNIQUE(grade_id));
+
+#inserting values to grade
+Insert into grade value ('g01', 'e01', 's01','75', '6');
+Insert into grade value ('g02', 'e02', 's01','80', '6');
+Insert into grade value ('g03', 'e03', 's01','92', '7');
+Insert into grade value ('g04', 'e04', 's01','86', '7');
+Insert into grade value ('g05', 'e05', 's02','71', '5');
+Insert into grade value ('g06', 'e06', 's03','65', '5');
+Insert into grade value ('g07', 'e07', 's04','55', '4');
+Insert into grade value ('g08', 'e08', 's04','66', '5');
+Insert into grade value ('g09', 'e09', 's04','80', '6');
+Insert into grade value ('g10', 'e10', 's04','86', '7');
+
+
+#creating user table
+create table user (
+user_id char(10),
+first_name varchar(20),
+last_name varchar(20),
+role varchar(20),
+constraint user_pk Primary key(user_id),
+UNIQUE(user_id));
+
+#inserting values to user
+Insert into user value ('u01', 'Bruce', 'Whyne', 'DBA');
+Insert into user value ('u02', 'Cristiano', 'Penaldo', 'adminstaff');
+Insert into user value ('u03', 'Lionel', 'Missy', 'adminstaff');
+Insert into user value ('u04', 'Seb', 'Binary', 'adminstaff');
+Insert into user value ('u05', 'Jazz', 'Wood', 'adminstaff');
+Insert into user value ('u06', 'Miguel', 'Franco', 'student');
+Insert into user value ('u07', 'Angela', 'Merkal', 'student');
+Insert into user value ('u08', 'Donaldo', 'True', 'student');
+Insert into user value ('u09', 'Hillarious', 'Blinton', 'student');
+Insert into user value ('u10', 'Tarra', 'Obana', 'student');
+
